@@ -72,39 +72,43 @@ export const CartProvider = ({ children }) => {
     }
   }, [activeOrder]);
 
-  const addToCart = (food) => {
+  const addToCart = (food, custom = {}) => {
+    const itemKey = custom.portion ? `${food.id}-${custom.portion}` : food.id;
+    const finalPrice = custom.totalPrice || food.price;
     setCart((prev) => {
-      const existing = prev.find((item) => item.id === food.id);
+      const existing = prev.find((item) => (item.cartKey || item.id) === itemKey);
       if (existing) {
         return prev.map((item) =>
-          item.id === food.id ? { ...item, quantity: item.quantity + 1 } : item
+          (item.cartKey || item.id) === itemKey ? { ...item, quantity: item.quantity + (custom.qty || 1) } : item
         );
       }
       return [
         ...prev,
         {
           id: food.id,
-          name: food.name,
-          price: food.price,
+          cartKey: itemKey,
+          name: food.name + (custom.portion ? ` (${custom.portion})` : ''),
+          price: finalPrice,
           image: food.image,
           prepTime: food.prepTime,
           isVeg: food.isVeg,
           category: food.category,
-          quantity: 1,
+          quantity: custom.qty || 1,
+          selectedOptions: custom.optionsSummary || '',
         },
       ];
     });
   };
 
   const removeFromCart = (id) => {
-    setCart((prev) => prev.filter((item) => item.id !== id));
+    setCart((prev) => prev.filter((item) => (item.cartKey || item.id) !== id && item.id !== id));
   };
 
-  const updateQuantity = (id, delta) => {
+  const updateQuantity = (idOrKey, delta) => {
     setCart((prev) =>
       prev
         .map((item) => {
-          if (item.id === id) {
+          if ((item.cartKey || item.id) === idOrKey || item.id === idOrKey) {
             const newQty = item.quantity + delta;
             return newQty > 0 ? { ...item, quantity: newQty } : null;
           }

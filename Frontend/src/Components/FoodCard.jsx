@@ -1,5 +1,5 @@
 import React from 'react';
-import { Star, Clock, Plus, Minus } from 'lucide-react';
+import { Star, Clock, Plus, Minus, ShieldCheck } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 
 const FoodCard = ({ food }) => {
@@ -7,10 +7,10 @@ const FoodCard = ({ food }) => {
   const quantity = getItemQuantity(food.id);
 
   return (
-    <div className="group bg-white rounded-2xl overflow-hidden border border-stone-200/70 hover:border-orange-300 hover:shadow-xl hover:shadow-orange-500/10 transition-all duration-300 flex flex-col h-full transform hover:-translate-y-0.5">
+    <div className="group bg-white rounded-2xl overflow-hidden border border-stone-200/80 hover:border-orange-300 hover:shadow-xl hover:shadow-orange-500/10 transition-all duration-300 flex flex-col h-full transform hover:-translate-y-0.5">
       {/* Food Image Container */}
       <div 
-        className="relative h-36 sm:h-40 md:h-44 overflow-hidden cursor-pointer bg-stone-100"
+        className="relative h-40 sm:h-44 overflow-hidden cursor-pointer bg-stone-100"
         onClick={() => setSelectedFoodForDetail(food)}
       >
         <img
@@ -49,7 +49,7 @@ const FoodCard = ({ food }) => {
         </div>
 
         {/* Prep Time Pill */}
-        <div className="absolute bottom-2.5 right-2.5 bg-white/90 backdrop-blur-md text-stone-700 text-[11px] font-semibold px-2 py-0.5 rounded-full flex items-center gap-1 shadow-2xs">
+        <div className="absolute bottom-2.5 right-2.5 bg-white/95 backdrop-blur-md text-stone-700 text-[10px] font-bold px-2 py-0.5 rounded-full flex items-center gap-1 shadow-2xs border border-stone-100/80">
           <Clock className="w-3 h-3 text-orange-500" />
           {food.prepTime}
         </div>
@@ -79,8 +79,14 @@ const FoodCard = ({ food }) => {
             {food.name}
           </h3>
 
+          {/* Quality Assurance Mention */}
+          <div className="flex items-center gap-1 mt-1 text-[10px] font-bold text-emerald-700 bg-emerald-50/70 border border-emerald-200/50 px-2 py-0.5 rounded-md w-fit">
+            <ShieldCheck className="w-3 h-3 text-emerald-600 shrink-0" />
+            <span>100% Quality Assured • FSSAI Certified</span>
+          </div>
+
           {/* Dish Description */}
-          <p className="text-stone-500 text-xs mt-1 line-clamp-2 leading-relaxed">
+          <p className="text-stone-500 text-xs mt-1.5 line-clamp-2 leading-relaxed">
             {food.description}
           </p>
 
@@ -99,8 +105,8 @@ const FoodCard = ({ food }) => {
           )}
         </div>
 
-        {/* Price & Add to Cart Action */}
-        <div className="pt-3 mt-3 border-t border-stone-100 flex items-center justify-between">
+        {/* Price & Compact Add to Cart Action */}
+        <div className="pt-2.5 mt-2.5 border-t border-stone-100 flex items-center justify-between">
           <div>
             <span className="text-[10px] text-stone-400 block font-semibold uppercase tracking-wider">Price</span>
             <div className="flex items-baseline gap-1">
@@ -115,29 +121,30 @@ const FoodCard = ({ food }) => {
             </div>
           </div>
 
+          {/* Compact ADD button */}
           {quantity === 0 ? (
             <button
               onClick={() => addToCart(food)}
-              className="bg-orange-500 hover:bg-orange-600 text-white font-extrabold text-xs px-3.5 py-1.5 rounded-xl flex items-center gap-1 shadow-sm shadow-orange-500/20 active:scale-95 transition-all"
+              className="bg-white hover:bg-orange-500 text-orange-600 hover:text-white border border-orange-500 font-extrabold text-[11px] px-3 py-1 rounded-lg flex items-center gap-1 shadow-2xs active:scale-95 transition-all cursor-pointer"
             >
-              <Plus className="w-3.5 h-3.5 stroke-[3]" />
               <span>ADD</span>
+              <Plus className="w-3 h-3 stroke-[3]" />
             </button>
           ) : (
-            <div className="flex items-center bg-orange-50 rounded-xl p-0.5 border border-orange-200">
+            <div className="flex items-center bg-orange-50 rounded-lg p-0.5 border border-orange-200">
               <button
                 onClick={() => updateQuantity(food.id, -1)}
-                className="w-6 h-6 rounded-lg bg-white hover:bg-orange-500 hover:text-white text-stone-700 flex items-center justify-center transition shadow-2xs active:scale-90"
+                className="w-5 h-5 rounded bg-white hover:bg-orange-500 hover:text-white text-stone-700 flex items-center justify-center transition shadow-2xs active:scale-90 cursor-pointer"
                 aria-label="Decrease quantity"
               >
                 <Minus className="w-3 h-3 stroke-[2.5]" />
               </button>
-              <span className="w-6 text-center text-xs font-black text-stone-900">
+              <span className="w-5 text-center text-[11px] font-black text-stone-900">
                 {quantity}
               </span>
               <button
                 onClick={() => updateQuantity(food.id, 1)}
-                className="w-6 h-6 rounded-lg bg-orange-500 hover:bg-orange-600 text-white flex items-center justify-center transition shadow-2xs active:scale-90"
+                className="w-5 h-5 rounded bg-orange-500 hover:bg-orange-600 text-white flex items-center justify-center transition shadow-2xs active:scale-90 cursor-pointer"
                 aria-label="Increase quantity"
               >
                 <Plus className="w-3 h-3 stroke-[2.5]" />

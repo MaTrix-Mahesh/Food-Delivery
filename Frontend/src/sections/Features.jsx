@@ -5,30 +5,34 @@ const features = [
   {
     icon: Zap,
     title: 'Lightning 30-Min Delivery',
-    description: 'Hot food delivered straight from our specialized kitchens to your doorstep without delay.',
+    description: 'Hot food delivered straight from specialized cloud kitchens to your doorstep without delay.',
     color: 'text-amber-500',
-    bg: 'bg-amber-50'
+    bg: 'bg-amber-50',
+    badge: 'Express'
   },
   {
     icon: ShieldCheck,
-    title: '100% Quality & Hygiene',
-    description: 'Every kitchen follows strict food-safety protocols with regular microbial tests & organic sourcing.',
+    title: '100% Quality Assurance',
+    description: 'FSSAI certified kitchens, strict microbial tests, tamper-proof seals & organic sourcing.',
     color: 'text-emerald-500',
-    bg: 'bg-emerald-50'
+    bg: 'bg-emerald-50',
+    badge: 'FSSAI Certified'
   },
   {
     icon: MapPin,
     title: 'Live GPS Delivery Tracking',
-    description: 'Track your driver in real-time from the kitchen counter until they arrive at your doorbell.',
+    description: 'Track your delivery partner in real-time on live map from kitchen to your doorstep.',
     color: 'text-blue-500',
-    bg: 'bg-blue-50'
+    bg: 'bg-blue-50',
+    badge: 'Real-Time'
   },
   {
     icon: HeartHandshake,
     title: 'Master Artisan Chefs',
-    description: 'Recipes curated by seasoned chefs dedicated to true authenticity and unmatched gastronomic taste.',
+    description: 'Recipes handcrafted by seasoned chefs with pure desi ghee and authentic spices.',
     color: 'text-orange-500',
-    bg: 'bg-orange-50'
+    bg: 'bg-orange-50',
+    badge: 'Authentic'
   }
 ];
 
@@ -54,17 +58,26 @@ const Features = () => {
             return (
               <div 
                 key={i} 
-                className="p-4 sm:p-5 rounded-2xl bg-stone-50/70 border border-stone-200/70 hover:border-orange-200 hover:bg-orange-50/20 transition-all duration-300 group"
+                className="p-4 sm:p-5 rounded-2xl bg-stone-50/70 border border-stone-200/70 hover:border-orange-200 hover:bg-orange-50/20 transition-all duration-300 group flex flex-col justify-between"
               >
-                <div className={`w-11 h-11 rounded-xl ${f.bg} ${f.color} flex items-center justify-center mb-3 group-hover:scale-105 transition-transform`}>
-                  <Icon className="w-5 h-5" />
+                <div>
+                  <div className="flex items-center justify-between mb-3">
+                    <div className={`w-10 h-10 rounded-xl ${f.bg} ${f.color} flex items-center justify-center group-hover:scale-105 transition-transform`}>
+                      <Icon className="w-5 h-5" />
+                    </div>
+                    {f.badge && (
+                      <span className="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full bg-white border border-stone-200 text-stone-600 shadow-2xs">
+                        {f.badge}
+                      </span>
+                    )}
+                  </div>
+                  <h3 className="text-sm sm:text-base font-black text-stone-900 mb-1">
+                    {f.title}
+                  </h3>
+                  <p className="text-xs text-stone-500 leading-relaxed">
+                    {f.description}
+                  </p>
                 </div>
-                <h3 className="text-sm sm:text-base font-black text-stone-900 mb-1">
-                  {f.title}
-                </h3>
-                <p className="text-xs text-stone-500 leading-relaxed">
-                  {f.description}
-                </p>
               </div>
             );
           })}
